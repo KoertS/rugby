@@ -11,9 +11,7 @@ public class Match {
     private String time;
     private String score;
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+    public void setDate(String date) {this.date = date;}
 
     public void setTime(String time) {this.time = time;}
 
@@ -22,4 +20,10 @@ public class Match {
     public void setGuest(String guest) {this.guest = guest;}
 
     public void setScore(String score) { this.score = score; }
+
+    public String getDate() { return date; }
+    public String getTime() { return time; }
+    public String getHome() { return home; }
+    public String getGuest() { return guest; }
+    public String getScore() { return score; }
 }
