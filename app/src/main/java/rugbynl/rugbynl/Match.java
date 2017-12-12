@@ -4,26 +4,75 @@ package rugbynl.rugbynl;
  * Created by ASE on 6-9-17.
  */
 public class Match {
+    private String team = "";
+    private String date = "";
+    private String homeTeam = "";
+    private String awayTeam = "";
+    private String time = "";
+    private String score = "";
+    private String opponent = "";
+    private Boolean homeGame;
 
-    private String date;
-    private String home;
-    private String guest;
-    private String time;
-    private String score;
+    public Match(String team) {
+        this.team = team;
+    }
 
-    public void setDate(String date) {this.date = date;}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-    public void setTime(String time) {this.time = time;}
+    public void setTime(String time) {
+        this.time = time;
+    }
 
-    public void setHome(String home) {this.home = home; }
+    public void setHomeTeam(String homeTeam) {
+        this.homeTeam = homeTeam;
+    }
 
-    public void setGuest(String guest) {this.guest = guest;}
+    public void setAwayTeam(String awayTeam) {
+        this.awayTeam = awayTeam;
+    }
 
-    public void setScore(String score) { this.score = score; }
+    public void setOpponent() {
+        System.out.println(homeTeam + " = " + team + "    " + homeTeam.contains(team));
+        if (homeTeam.toLowerCase().contains(team.toLowerCase())) {
+            opponent = awayTeam;
+            homeGame = true;
+        } else {
+            opponent = homeTeam;
+            homeGame = false;
+        }
+    }
 
-    public String getDate() { return date; }
-    public String getTime() { return time; }
-    public String getHome() { return home; }
-    public String getGuest() { return guest; }
-    public String getScore() { return score; }
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getHomeTeam() {
+        return homeTeam;
+    }
+
+    public String getAwayTeam() {
+        return awayTeam;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public String getOpponent() {
+        return opponent;
+    }
+
+    public boolean isHomeGame() {
+        return homeGame;
+    }
 }

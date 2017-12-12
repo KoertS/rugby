@@ -4,12 +4,10 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -23,6 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private String urlObelix1 = "http://www.erugby.nl/pub/nrb/2017-2018/2e_Klasse_Heren_Zuid/index.htm";
     private String urlObelix2 = "http://www.erugby.nl/pub/nrb/2017-2018/4e_Klasse_Heren_Zuid_-_Oost/index.htm";
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mListView = (ListView) findViewById(R.id.listView);
+
+
 
         // Locate the Buttons in activity_main.xml
         Button obelix1 = (Button) findViewById(R.id.obelix1);
         Button obelix2 = (Button) findViewById(R.id.obelix2);
-
-        final ScheduleGetter scheduleGetter = new ScheduleGetter();
 
         // Capture button click
         obelix1.setOnClickListener(new View.OnClickListener() {
@@ -57,72 +57,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fillTable(List<Match> matches) {
-        // http://stackoverflow.com/questions/18207470/adding-table-rows-dynamically-in-android
-        TableLayout stk = (TableLayout) findViewById(R.id.table_main);
-        stk.removeAllViews();
-        // add headers
-        TableRow tbrow0 = new TableRow(this);
-        TextView tv0 = new TextView(this);
-        tv0.setText(" Datum ");
-        tbrow0.addView(tv0);
-        TextView tv1 = new TextView(this);
-        tv1.setText(" Tijd ");
-        tbrow0.addView(tv1);
-        TextView tv2 = new TextView(this);
-        tv2.setText(" Thuis ");
-        tbrow0.addView(tv2);
-        TextView tv3 = new TextView(this);
-        tv3.setText(" Gasten ");
-        tbrow0.addView(tv3);
-        TextView tv4 = new TextView(this);
-        tv4.setText(" Uitslag ");
-        tbrow0.addView(tv4);
-        stk.addView(tbrow0);
-
-        for (Match match : matches) { // fill table
-            TableRow tbrow = new TableRow(this);
-            String date = match.getDate();
-            String time = match.getTime();
-            String home = match.getHome();
-            String guest = match.getGuest();
-            String score = match.getScore();
-
-            TextView t1v = new TextView(this);
-            t1v.setText(space(date));
-            tbrow.addView(t1v);
-
-            TextView t2v = new TextView(this);
-            t2v.setText(space(time));
-            t2v.setGravity(Gravity.START);
-            tbrow.addView(t2v);
-
-            TextView t3v = new TextView(this);
-            t3v.setText(space(home));
-            tbrow.addView(t3v);
-
-            TextView t4v = new TextView(this);
-            t4v.setText(space(guest));
-            tbrow.addView(t4v);
-
-            TextView t5v = new TextView(this);
-            t5v.setText(space(score));
-            tbrow.addView(t5v);
-
-            stk.addView(tbrow);
+        String[] listItems = new String[matches.size()];
+        for(int i = 0; i < matches.size(); i++){
+            Match match = matches.get(i);
+            listItems[i] = match.getOpponent();
         }
 
+        MatchAdapter adapter = new MatchAdapter(this, matches);
+        mListView.setAdapter(adapter);
     }
-
-    /**
-     * Places spaces around string
-     *
-     * @param s, string
-     * @return " " + string + " "
-     */
-    private String space(String s) {
-        return " " + s + " ";
-    }
-
 
 
 
@@ -183,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             List<Match> matches = new ArrayList<>();
             for (int i = 0; i < rows.size(); i++) { // loop through all matches
                 if (rows.get(i).text().toLowerCase().contains(team)) { // only pick matches that contain team
-                    Match match = new Match();
+                    Match match = new Match(team);
                     int indexOfHeader = getMatchingHeader(i, headerIndexes);
 
                     String dateString = rows.get(indexOfHeader).select("td").text();
@@ -197,9 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
                     Elements cols = rows.get(i).select("td");
                     match.setTime(cols.get(0).text());
-                    match.setHome(cols.get(2).text());
-                    match.setGuest(cols.get(3).text());
+                    match.setHomeTeam(cols.get(2).text());
+                    match.setAwayTeam(cols.get(3).text());
                     match.setScore(cols.get(4).text());
+                    match.setOpponent();
 
                     matches.add(match);
                 }
@@ -229,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             // Set title into TextView
             TextView titleTextView = (TextView) findViewById(R.id.title_textview);
             titleTextView.setText(title);
-            System.out.print(matches.get(0).getHome());
+
             // fill table
             fillTable(matches);
 
