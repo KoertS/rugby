@@ -65,7 +65,7 @@ public class MatchAdapter extends BaseAdapter {
 
         opponentTextView.setText(match.getOpponent());
         dateTextView.setText(match.getDate());
-        homeGameTextView.setText(String.valueOf(match.isHomeGame()));
+        homeGameTextView.setText(String.valueOf(match.getHomeOrAway()));
 
         return rowView;
     }

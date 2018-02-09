@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.listView);
 
-
-
         // Locate the Buttons in activity_main.xml
         Button obelix1 = (Button) findViewById(R.id.obelix1);
         Button obelix2 = (Button) findViewById(R.id.obelix2);

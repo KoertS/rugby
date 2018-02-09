@@ -75,4 +75,8 @@ public class Match {
     public boolean isHomeGame() {
         return homeGame;
     }
+
+    public String getHomeOrAway() {
+        return homeGame ? "home": "away";
+    }
 }
