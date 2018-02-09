@@ -4,10 +4,11 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -21,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private String urlObelix1 = "http://www.erugby.nl/pub/nrb/2017-2018/2e_Klasse_Heren_Zuid/index.htm";
     private String urlObelix2 = "http://www.erugby.nl/pub/nrb/2017-2018/4e_Klasse_Heren_Zuid_-_Oost/index.htm";
-    private ListView mListView;
+    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mListView = (ListView) findViewById(R.id.listView);
+        rv = (RecyclerView) findViewById(R.id.recyclerView);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
 
         // Locate the Buttons in activity_main.xml
         Button obelix1 = (Button) findViewById(R.id.obelix1);
@@ -61,11 +64,9 @@ public class MainActivity extends AppCompatActivity {
             listItems[i] = match.getOpponent();
         }
 
-        MatchAdapter adapter = new MatchAdapter(this, matches);
-        mListView.setAdapter(adapter);
+        MatchAdapter adapter = new MatchAdapter(matches);
+        rv.setAdapter(adapter);
     }
-
-
 
     /**
      * Retrieves schedule. String params: url, team

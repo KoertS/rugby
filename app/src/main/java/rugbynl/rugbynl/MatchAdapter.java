@@ -1,10 +1,10 @@
 package rugbynl.rugbynl;
 
-import android.content.Context;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,61 +12,50 @@ import java.util.List;
 /**
  * Created by ASE on 12-12-17.
  */
-public class MatchAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private List<Match> mDataSource;
+// https://code.tutsplus.com/tutorials/getting-started-with-recyclerview-and-cardview-on-android--cms-23465
+public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHolder> {
+    private List<Match> matches;
 
-    public MatchAdapter(Context context, List<Match> items) {
-        mContext = context;
-        mDataSource = items;
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public MatchAdapter(List<Match> matches) {
+        this.matches = matches;
     }
 
-    //1
     @Override
-    public int getCount() {
-        return mDataSource.size();
+    public int getItemCount() {
+        return matches.size();
     }
 
-    //2
     @Override
-    public Object getItem(int position) {
-        return mDataSource.get(position);
+    public MatchViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
+        MatchViewHolder mvh = new MatchViewHolder(v);
+        return mvh;
     }
 
-    //3
     @Override
-    public long getItemId(int position) {
-        return position;
+    public void onBindViewHolder(MatchViewHolder matchViewHolder, int i) {
+        matchViewHolder.homeTeam.setText(matches.get(i).getHomeTeam());
+        matchViewHolder.awayTeam.setText(matches.get(i).getAwayTeam());
+        matchViewHolder.time.setText(matches.get(i).getTime());
     }
 
-    //4
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Get view for row item
-        View rowView = mInflater.inflate(R.layout.list_item_match, parent, false);
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
 
-        // Get title element
-        TextView opponentTextView =
-                (TextView) rowView.findViewById(R.id.match_list_opponent);
+    public static class MatchViewHolder extends RecyclerView.ViewHolder {
+        CardView cv;
+        TextView homeTeam;
+        TextView awayTeam;
+        TextView time;
 
-        // Get subtitle element
-        TextView dateTextView =
-                (TextView) rowView.findViewById(R.id.match_list_date);
-
-        // Get detail element
-        TextView homeGameTextView =
-                (TextView) rowView.findViewById(R.id.match_list_homeGame);
-
-
-        //
-        Match match = (Match) getItem(position);
-
-        opponentTextView.setText(match.getOpponent());
-        dateTextView.setText(match.getDate());
-        homeGameTextView.setText(String.valueOf(match.getHomeOrAway()));
-
-        return rowView;
+        MatchViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.cardView);
+            homeTeam = (TextView)itemView.findViewById(R.id.homeTeam);
+            awayTeam = (TextView)itemView.findViewById(R.id.awayTeam);
+            time = (TextView) itemView.findViewById(R.id.time);
+        }
     }
 }
