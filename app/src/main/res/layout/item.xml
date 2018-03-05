@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/cardView"
+    android:layout_marginBottom="4dp"
     >
 
     <RelativeLayout
@@ -12,30 +13,43 @@
         android:padding="16dp"
         >
 
+        <!-- Date -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/homeTeam"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="16dp"
-            android:textSize="20sp"
+            android:id="@+id/date"
+            android:layout_centerHorizontal="true"
             />
 
+        <!-- Time -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/time"
-            android:layout_toRightOf="@+id/homeTeam"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/date"
+            android:layout_centerHorizontal="true"
             />
 
+        <!-- HomeTeam -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/homeTeam"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignTop="@+id/time"
+            android:layout_toLeftOf="@id/time"
+            />
+
+        <!-- AwayTeam-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/awayTeam"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_alignTop="@+id/time"
             android:layout_toRightOf="@+id/time"
-            android:textSize="20sp"
             />
 
     </RelativeLayout>
