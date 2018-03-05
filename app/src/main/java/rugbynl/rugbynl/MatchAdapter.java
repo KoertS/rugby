@@ -38,7 +38,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         matchViewHolder.awayTeam.setText(matches.get(i).getAwayTeam());
         matchViewHolder.time.setText(matches.get(i).getTime());
         matchViewHolder.date.setText(matches.get(i).getDate());
-        System.out.println("datum: " + matches.get(i).getDate());
+        matchViewHolder.location.setText(matches.get(i).getLocation());
     }
 
     @Override
@@ -52,6 +52,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         TextView awayTeam;
         TextView time;
         TextView date;
+        TextView location;
 
         MatchViewHolder(View itemView) {
             super(itemView);
@@ -60,6 +61,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
             awayTeam = (TextView)itemView.findViewById(R.id.awayTeam);
             time = (TextView) itemView.findViewById(R.id.time);
             date = (TextView) itemView.findViewById(R.id.date);
+            location = (TextView) itemView.findViewById(R.id.location);
         }
     }
 }

@@ -30,6 +30,15 @@
             android:layout_centerHorizontal="true"
             />
 
+        <!-- Location -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/location"
+            android:layout_below="@+id/time"
+            android:layout_centerHorizontal="true"
+            />
+
         <!-- HomeTeam -->
         <TextView
             android:layout_width="wrap_content"

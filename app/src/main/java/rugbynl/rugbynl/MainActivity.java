@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < rows.size(); i++) { // loop through all matches
                 if (rows.get(i).text().toLowerCase().contains(team)) { // only pick matches that contain team
                     Match match = new Match(team);
+
+                    // TODO: put the getting the date in different class
                     int indexOfHeader = getMatchingHeader(i, headerIndexes);
 
                     String dateString = rows.get(indexOfHeader).select("td").text();
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Elements cols = rows.get(i).select("td");
                     match.setTime(cols.get(0).text());
+                    match.setLocation(cols.get(1).text());
                     match.setHomeTeam(cols.get(2).text());
                     match.setAwayTeam(cols.get(3).text());
                     match.setScore(cols.get(4).text());

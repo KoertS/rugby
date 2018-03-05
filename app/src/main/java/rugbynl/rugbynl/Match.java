@@ -11,6 +11,7 @@ public class Match {
     private String time = "";
     private String score = "";
     private String opponent = "";
+    private String location = "";
     private Boolean homeGame;
 
     public Match(String team) {
@@ -78,5 +79,13 @@ public class Match {
 
     public String getHomeOrAway() {
         return homeGame ? "home": "away";
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }
