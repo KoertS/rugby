@@ -16,8 +16,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private String urlObelix1 = "http://www.erugby.nl/pub/nrb/2017-2018/2e_Klasse_Heren_Zuid/index.htm";
@@ -58,13 +62,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fillTable(List<Match> matches) {
-        String[] listItems = new String[matches.size()];
+        List<Match> upcomingMatches= new ArrayList<Match>();
         for(int i = 0; i < matches.size(); i++){
+            // filter out previous matches
             Match match = matches.get(i);
-            listItems[i] = match.getOpponent();
+            DateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            System.out.println("test: comparing match date: " + dataFormat.format(match.getDate()));
+            System.out.println("test: with current date: " + dataFormat.format(new Date()));
+            System.out.println("test: " + match.getDate().compareTo(new Date()));
+            if(match.getDate().compareTo(new Date()) >= 0 ) {
+                upcomingMatches.add(match);
+            }
         }
 
-        MatchAdapter adapter = new MatchAdapter(matches);
+        MatchAdapter adapter = new MatchAdapter(upcomingMatches);
         rv.setAdapter(adapter);
     }
 
@@ -127,17 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 if (rows.get(i).text().toLowerCase().contains(team)) { // only pick matches that contain team
                     Match match = new Match(team);
 
-                    // TODO: put the getting the date in different class
-                    int indexOfHeader = getMatchingHeader(i, headerIndexes);
-
-                    String dateString = rows.get(indexOfHeader).select("td").text();
-                    String[] dateSplit = dateString.split(" ");
-
-                    String day = String.format("%02d", Integer.parseInt(dateSplit[1])); // force length to 2 by adding 0 in front
-                    String month = dateSplit[2];
-                    String year = dateSplit[3];
-                    String date = day + " " + month + " " + year;
-                    match.setDate(date);
+                    match.setDate(getDate(i, headerIndexes, rows));
 
                     Elements cols = rows.get(i).select("td");
                     match.setTime(cols.get(0).text());
@@ -151,6 +153,59 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             return matches;
+        }
+
+        private Date getDate(int i, List<Integer> headerIndexes, Elements rows) {
+            int indexOfHeader = getMatchingHeader(i, headerIndexes);
+
+            String dateString = rows.get(indexOfHeader).select("td").text();
+            String[] dateSplit = dateString.split(" ");
+
+            String day = String.format("%02d", Integer.parseInt(dateSplit[1])); // force length to 2 by adding 0 in front
+            String month = monthToNumber(dateSplit[2]);
+            String year = dateSplit[3];
+
+            String strDate = day + "/" + month + "/" + year;
+            // Convert the date string to Date object
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = null;
+            try {
+                date = dateFormat.parse(strDate);
+            } catch (ParseException e) {
+                System.err.println("Invalid date format: " + e.getMessage());
+            }
+            return date;
+        }
+
+        private String monthToNumber(String month) {
+            switch (month.toLowerCase()){
+                case "januari":
+                    return "01";
+                case "februari":
+                    return "02";
+                case "maart":
+                    return "03";
+                case "april":
+                    return "04";
+                case "mei":
+                    return "05";
+                case "juni":
+                    return "06";
+                case "juli":
+                    return "07";
+                case "augustus":
+                    return "08";
+                case "september":
+                    return "09";
+                case "oktober":
+                    return "10";
+                case "november":
+                    return "11";
+                case "december":
+                    return "12";
+                default:
+                    return "00";
+            }
         }
 
         /**

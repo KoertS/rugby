@@ -1,11 +1,13 @@
 package rugbynl.rugbynl;
 
+import java.util.Date;
+
 /**
  * Created by ASE on 6-9-17.
  */
 public class Match {
     private String team = "";
-    private String date = "";
+    private Date date = new Date();
     private String homeTeam = "";
     private String awayTeam = "";
     private String time = "";
@@ -18,7 +20,7 @@ public class Match {
         this.team = team;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -49,7 +51,7 @@ public class Match {
         this.score = score;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 

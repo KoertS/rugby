@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -37,7 +39,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         matchViewHolder.homeTeam.setText(matches.get(i).getHomeTeam());
         matchViewHolder.awayTeam.setText(matches.get(i).getAwayTeam());
         matchViewHolder.time.setText(matches.get(i).getTime());
-        matchViewHolder.date.setText(matches.get(i).getDate());
+        DateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
+        matchViewHolder.date.setText(dataFormat.format(matches.get(i).getDate()));
         matchViewHolder.location.setText(matches.get(i).getLocation());
     }
 
