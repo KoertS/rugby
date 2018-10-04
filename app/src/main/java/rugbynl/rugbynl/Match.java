@@ -28,7 +28,7 @@ public class Match {
         this.time = time;
     }
 
-    public void setHomeTeam(String homeTeam) {
+        public void setHomeTeam(String homeTeam) {
         this.homeTeam = homeTeam;
     }
 

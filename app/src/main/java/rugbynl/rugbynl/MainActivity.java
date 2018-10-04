@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    private String urlObelix1 = "http://www.erugby.nl/pub/nrb/2017-2018/2e_Klasse_Heren_Zuid/index.htm";
-    private String urlObelix2 = "http://www.erugby.nl/pub/nrb/2017-2018/4e_Klasse_Heren_Zuid_-_Oost/index.htm";
+    private String urlObelix1 = "https://www.erugby.nl/pub/nrb/2018-2019/2e_klasse_Heren_Zuid__1e_fase/index.htm";
+    private String urlObelix2 = "https://www.erugby.nl/pub/nrb/2018-2019/4e_klasse_Heren_Zuid_-_Oost__1e_fase/index.htm";
     private RecyclerView rv;
 
     @Override
@@ -121,7 +121,11 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-
+        /**
+         * This function returns list of index of the header. Header contains date of the matches
+         * @param rows
+         * @return List of indexes of headers
+         */
         private List<Integer> getHeaderIndexes(Elements rows) {
             List<Integer> headerIndex = new ArrayList<>();
             for (int i = 0; i < rows.size(); i++) {
@@ -135,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         private List<Match> addTeamMatches(String team, Elements rows) {
             List<Integer> headerIndexes = getHeaderIndexes(rows);
             List<Match> matches = new ArrayList<>();
+
             for (int i = 0; i < rows.size(); i++) { // loop through all matches
                 if (rows.get(i).text().toLowerCase().contains(team)) { // only pick matches that contain team
                     Match match = new Match(team);
