@@ -27,37 +27,12 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
 
-        List<Match> matches = matchesReaderWriter.loadMatches();
+        matches = matchesReaderWriter.loadMatches();
         if(matches.isEmpty()){
             ScheduleDownloader scheduleDownloader = new ScheduleDownloader(matchesReaderWriter, this);
             scheduleDownloader.execute();
         }
         fillTable(matches);
-
-
-
-        /*
-        // Locate the Buttons in activity_main.xml
-        Button obelix1 = findViewById(R.id.obelix1);
-        Button obelix2 = findViewById(R.id.obelix2);
-        // Capture button click
-        obelix1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String[] scheduleParams = {urlObelix1, "obelix"};
-                new getSchedule().execute(scheduleParams);
-            }
-        });
-
-        obelix2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String[] scheduleParams = {urlObelix2, "obelix"};
-                new getSchedule().execute(scheduleParams);
-            }
-        });
-        */
-
     }
 
     public void fillTable(List<Match> matches) {
