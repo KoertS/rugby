@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by ASE on 6-9-17.
  */
 public class Match {
-    private String team = "";
+    private String team;
     private Date date = new Date();
     private String homeTeam = "";
     private String awayTeam = "";
