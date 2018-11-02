@@ -1,11 +1,13 @@
 package rugbynl.rugbynl;
 
+import android.support.annotation.NonNull;
+
 import java.util.Date;
 
 /**
  * Created by ASE on 6-9-17.
  */
-public class Match {
+public class Match extends ListItem implements Comparable<Match> {
     private String team;
     private Date date = new Date();
     private String homeTeam = "";
@@ -89,5 +91,10 @@ public class Match {
 
     public String getLocation() {
         return location;
+    }
+
+    @Override
+    public int compareTo(@NonNull Match other) {
+        return date.compareTo(other.getDate());
     }
 }

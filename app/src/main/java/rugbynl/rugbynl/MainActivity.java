@@ -6,9 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Window;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -32,19 +32,29 @@ public class MainActivity extends AppCompatActivity {
             ScheduleDownloader scheduleDownloader = new ScheduleDownloader(matchesReaderWriter, this);
             scheduleDownloader.execute();
         }
+        Collections.sort(matches);
         fillTable(matches);
     }
 
     public void fillTable(List<Match> matches) {
         List<Match> upcomingMatches= new ArrayList<Match>();
+
+        Date prevMatchDate = matches.get(0).getDate();
+        Header header = new Header(prevMatchDate);
+      //  upcomingMatches.add(header);
         for(int i = 0; i < matches.size(); i++){
             // filter out previous matches
             Match match = matches.get(i);
-            DateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-            System.out.println("test: comparing match date: " + dataFormat.format(match.getDate()));
-            System.out.println("test: with current date: " + dataFormat.format(new Date()));
-            System.out.println("test: " + match.getDate().compareTo(new Date()));
+            // Check if next match in list is on the same day
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+            if(!fmt.format(match.getDate()).equals(fmt.format(prevMatchDate))){
+                // If match is on an other day than then the previous, then add header between previous match and match
+                prevMatchDate = match.getDate();
+                header = new Header(prevMatchDate);
+                //upcomingMatches.add(header);
+            }
+            // Only display matches that still need to be played
             if(match.getDate().compareTo(new Date()) >= 0 ) {
                 upcomingMatches.add(match);
             }

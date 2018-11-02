@@ -7,59 +7,34 @@
     android:layout_marginBottom="4dp"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         >
 
-        <!-- Date -->
+        <!-- HomeTeam -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/date"
-            android:layout_centerHorizontal="true"
-            />
+            android:id="@+id/homeTeam"
+            android:layout_weight="1"
+         />
 
-        <!-- Time -->
+        <!-- AwayTeam-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/awayTeam"
+            android:layout_weight="1"
+
+         />
+
+        <!-- Timet -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/time"
-            android:layout_below="@+id/date"
-            android:layout_centerHorizontal="true"
             />
-
-        <!-- Location -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location"
-            android:layout_below="@+id/time"
-            android:layout_centerHorizontal="true"
-            />
-
-        <!-- HomeTeam -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/homeTeam"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_alignTop="@+id/time"
-            android:layout_toLeftOf="@id/time"
-            />
-
-        <!-- AwayTeam-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/awayTeam"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_alignTop="@+id/time"
-            android:layout_toRightOf="@+id/time"
-            />
-
-    </RelativeLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>

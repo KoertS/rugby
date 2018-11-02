@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -179,6 +180,7 @@ class ScheduleDownloader extends AsyncTask<String, Void, Void> {
 
     @Override
     protected void onPostExecute(Void results) {
+        Collections.sort(matches);
         matchesReaderWriter.saveData(matches);
         mainActivity.setMatches(matches);
         // Close dialog
